@@ -3,19 +3,18 @@ package student
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
-	"io"
-	"fmt"
-	
 
 	"github.com/asthap08/Golang_notes/internal/types"
 	"github.com/asthap08/Golang_notes/internal/utils/response"
 	"github.com/go-playground/validator/v10"
-
+	"golang.org/x/mod/sumdb/storage"
 )
 
-func New() http.HandlerFunc{
+func New(storage storage.Storage) http.HandlerFunc{
 	return func(w http.ResponseWriter, r *http.Request) {
 		slog.Info("Creating a student")
 
