@@ -13,6 +13,7 @@ import (
 	"syscall"
 
 	"github.com/asthap08/Golang_notes/internal/config"
+	"github.com/asthap08/Golang_notes/internal/http/handlers/student"
 )
 
 func main() {
@@ -22,11 +23,11 @@ func main() {
 	//setup router
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request){
-		w.Write([]byte("Hello, World!"))
-	})
+
+	router.HandleFunc("POST /api/students", student.New())
 
 	//setup server
+
 	server := http.Server{
 		Addr:    cfg.HTTPServer.Address,
 		Handler: router,
