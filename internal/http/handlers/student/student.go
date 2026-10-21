@@ -8,10 +8,10 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/asthap08/Golang_notes/internal/storage"
 	"github.com/asthap08/Golang_notes/internal/types"
 	"github.com/asthap08/Golang_notes/internal/utils/response"
 	"github.com/go-playground/validator/v10"
-	"golang.org/x/mod/sumdb/storage"
 )
 
 func New(storage storage.Storage) http.HandlerFunc{
@@ -41,8 +41,18 @@ func New(storage storage.Storage) http.HandlerFunc{
 		return
 	}
 
-	
+	lastId, err := storage.CreateStudent(
+		student.Name,
+		student.Email,
+		student.Age,
+	)
 
-	response.WriteJSON(w, http.StatusCreated, map[string]string{"success":"OK"})
+	slog.Info("user created successfully", slog.String("userId", fmt.Sprint(lastId)))
+	if err !=nil {
+		response.WriteJSON(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	response.WriteJSON(w, http.StatusCreated, map[string]int64{"id": lastId})
 }	
 }

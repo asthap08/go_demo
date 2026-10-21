@@ -43,7 +43,7 @@ func ValidatorError(errs validator.ValidationErrors) Response {
 	for _,err := range errs {
 		switch err.ActualTag() {
 		case "required":
-			errMsgs = append(errMsgs, fmt.Sprint("field %s is required field", err.Field()))
+			errMsgs = append(errMsgs, fmt.Sprintf("field %s is required field", err.Field()))
 
 		default:
 			errMsgs = append(errMsgs, fmt.Sprintf("field %s is invalid ", err.Field()))
